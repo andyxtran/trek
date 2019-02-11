@@ -1,0 +1,28 @@
+.flex-container {
+    align-content: space-between;
+}
+
+.flex-container > * {
+    flex: 1;
+}
+
+.header-container {
+    margin: 20px 20px;
+}
+
+.activeNav {
+    background-color: pink;
+}
+
+#about, #activity, #username {
+    text-align: center;
+    border-style: double ;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+}
+
+#avatar {
+    height: 200px;
+    width: 200px;
+}
+
+
