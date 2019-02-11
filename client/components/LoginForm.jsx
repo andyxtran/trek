@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
+import { NavLink } from 'react-router-dom'
 import '../css/LoginForm.css';
 
 class LoginForm extends Component {
@@ -56,7 +57,7 @@ class LoginForm extends Component {
         <input type="text" name="password" placeholder="Password (Required)" value={this.state.password}
           onChange={this.updateState} />
         <button onClick={this.submitState}>Login</button>
-        <button onClick={this.props.toggleForms}>Sign Up</button>
+        <NavLink to='/register'><button>Sign Up</button></NavLink>
       </div>
     );
   }

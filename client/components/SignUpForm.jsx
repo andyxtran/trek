@@ -1,5 +1,7 @@
 import React, {  Component } from 'react';
+import { NavLink } from 'react-router-dom';
 import '../css/SignUpForm.css';
+
 
 class SignUpForm extends Component {
   constructor(props) {
@@ -71,7 +73,7 @@ class SignUpForm extends Component {
           <p>Last Name:</p>
           <input type="text" name="l_name" placeholder="Last Name" value={this.state.l_name} onChange={this.handleChange} />
           <button onClick={this.handleSubmit}>Sign Up</button>
-          <button onClick={this.props.toggleForms}>Login</button>
+          <NavLink to='/'><button>Login</button></NavLink>
         </div>
 
       </div>

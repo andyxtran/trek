@@ -2,7 +2,7 @@ const pg = require('pg');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-const uri = 'postgres://victor:victor@localhost/jobs_db';
+const uri = 'postgres://pfa:pfa@localhost/jobs_db';
 const client = new pg.Client(uri);
 
 client.connect((err) => {
