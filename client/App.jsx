@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { Router, Route } from 'react-router-dom';
-import Dashboard from './components/Dashboard';
-import JobPostings from './components/JobPostings';
 import Header from './components/Header';
-import Resources from './components/Resources';
 import Landing from './components/Landing';
-import './App.css';
+import Login from './components/LoginForm';
+import SignUp from './components/SignUpForm';
+import './css/App.css';
 import createBrowserHistory from 'history/createBrowserHistory'
 
 const history = createBrowserHistory()
@@ -28,10 +27,8 @@ class App extends Component {
             avatar={this.state.avatar}
           />
 
-          <Route exact path="/" component={Landing} />
-          <Route path="/jobs" component={JobPostings} />
-          <Route path="/dashboard" component={Dashboard} />
-          <Route path="/resources" component={Resources} />
+          <Route exact path="/" component={Login} />
+          <Route path="/register" component={SignUp} />
         </div>
       </Router>
     )

@@ -1,6 +1,6 @@
 const pg = require('pg');
 
-const uri = 'postgres://victor:victor@localhost/jobs_db';
+const uri = 'postgres://pfa:pfa@localhost/jobs_db';
 const client = new pg.Client(uri);
 
 client.connect((err) => {
@@ -9,7 +9,6 @@ client.connect((err) => {
     throw err;
   }
   console.log('connected to the psql db!');
-
 });
 
 const cardModel = {};
@@ -17,7 +16,6 @@ const cardModel = {};
 client.query(`
   CREATE TABLE IF NOT EXISTS cards
     (   
-
       card_id SERIAL PRIMARY KEY,
       title VARCHAR(100) NOT NULL,
       company VARCHAR(100) NOT NULL,

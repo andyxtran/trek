@@ -5,7 +5,6 @@ import LoginForm from './LoginForm';
 import JobCards from './JobCards';
 import AddCard from './AddCard';
 import '../css/Dashboard.css';
-import FormModal from './FormModal';
 import JobApplied from './JobApplied';
 
 
