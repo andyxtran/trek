@@ -1,21 +1,30 @@
+// Database imports: User: pfa and pw pfa and database "jobs"
+// psql -h stampy.db.elephantsql.com -d nabcaedd -U nabcaedd
+// Password:IXA9N6DfZg4bNpJJb3A6JgC9rI8EZNWG
 const pg = require('pg');
+
+const uri = 'postgres://nabcaedd:IXA9N6DfZg4bNpJJb3A6JgC9rI8EZNWG@stampy.db.elephantsql.com:5432/nabcaedd';
+const client = new pg.Client(uri);
+
+// encrypting the password using bcrypt
 const bcrypt = require('bcrypt');
 
 const saltRounds = 10;
 
+<<<<<<< HEAD
 const uri = 'postgres://victor:victor@localhost/jobs';
 const client = new pg.Client(uri);
 
+=======
+// opening up a connection to the database
+>>>>>>> eead14fa3d1430b33961992441864059e1a51a3e
 client.connect((err) => {
-  if (err) {
-    console.log('ERROR: could not connect to postgres');
-    throw err;
-  }
-  console.log('connected to the psql db!');
+  err ? console.log(err) : console.log('connected to psql db');
 });
 
 const userModel = {};
 
+// creating first instance of table in db
 client
   .query(
     `
@@ -27,7 +36,7 @@ client
       username text UNIQUE NOT NULL,
       email text UNIQUE,
       password text NOT NULL,
-      created TIMESTAMP NOT NULL
+      created TIMESTAMP DEFAULT NOW() NOT NULL
   );
 `,
   )
@@ -61,44 +70,23 @@ userModel.createUser = async (req, res) => {
   const salt = bcrypt.genSaltSync(saltRounds);
   const hash = bcrypt.hashSync(password, salt);
 
-  // CREATE TABLE users if it doesn't exist
-  // a unique psql id and date_created value should be returned
-  const created = '014-03-11 19:39:40';
-  return (
-    client
-      .query(
-        `
+  // CREATE row of new user if it doesn't exist
+  return client
+    .query(
+      `
     INSERT INTO users 
-    (f_name, l_name, username, email, password, created)
-    VALUES 
-      (
+    (f_name, l_name, username, email, password)
+    VALUES (
         '${f_name}', 
         '${l_name}', 
         '${username}', 
         '${email}', 
-        '${hash}', 
-        '${created}'
-      )
-    RETURNING _id, created;
+        '${hash}'
+      );
   `,
-      )
-      .then((result) => {
-        true;
-      })
-
-    //   return client.query(`INSERT INTO users (f_name, l_name, username, email, password) VALUES ('${f_name}', '${l_name}', '${username}', '${email}', '${hash}')`)
-    //     .then((res) => {
-    //       return true;
-    //     })
-    //     .catch((err) => {
-    //       console.log('ERROR with creating user in database', err);
-    //       return false;
-
-      .catch((err) => {
-        console.log('ERROR with creating user in database', err);
-        return false;
-      })
-  );
+    )
+    .then(result => result)
+    .catch(e => console.log('ERROR with creating user in database', e.stack));
 };
 
 module.exports = userModel;
