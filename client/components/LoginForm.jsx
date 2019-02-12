@@ -38,12 +38,15 @@ class LoginForm extends Component {
         },
         body: JSON.stringify(data)
       })
+        .then(res => res.json())
         .then(res => {
-          if (res.status === 200) {
+          if (res.hasOwnProperty('jwt')) {
             // this.props.history is used to redirect the user to 
             // another router from outside the render() method
-            window.sessionStorage.setItem('Authorized', 'true');
-            this.props.history.push('/dashboard');
+            this.props.history.push({
+              pathname: '/dashboard',
+              state: { jwt: res.jwt }
+            });
           } else {
             this.setState({ loginError: true, username: '', password: '' });
           }

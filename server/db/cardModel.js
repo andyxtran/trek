@@ -1,6 +1,6 @@
 const pg = require('pg');
 
-const uri = 'postgres://pfa:pfa@localhost/jobs';
+const uri = 'postgres://victor:victor@localhost/jobs';
 const client = new pg.Client(uri);
 
 client.connect((err) => {
@@ -52,6 +52,7 @@ cardModel.createCard = async (req, res) => {
     priority,
     username,
   } = req.body;
+
   return client
     .query(
       `
