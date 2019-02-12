@@ -1,6 +1,6 @@
 const pg = require('pg');
 
-const uri = 'postgres://pfa:pfa@localhost/jobs';
+const uri = 'postgres://nabcaedd:IXA9N6DfZg4bNpJJb3A6JgC9rI8EZNWG@stampy.db.elephantsql.com:5432/nabcaedd';
 const client = new pg.Client(uri);
 
 client.connect((err) => {
