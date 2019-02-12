@@ -1,4 +1,5 @@
 const express = require('express');
+
 const app = express();
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -6,19 +7,18 @@ const bodyParser = require('body-parser');
 const db = require('./db/userModel');
 const userController = require('./controllers/userController');
 const sessionController = require('./controllers/sessionController');
-const cardController = require('./controllers/cardController')
+const cardController = require('./controllers/cardController');
 
 app.use(express.static(path.join(__dirname, './../')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-
 app.get('/', (req, res, next) => {
   res.sendFile(path.join(__dirname, '../index.html'));
 });
 
-//if user is authenticated, fetch his job cards from db
+// if user is authenticated, fetch his job cards from db
 // app.post('/signin', userController.verify, cardModel.getCards, (req, res, next) => {
 //   if (res.locals.result) res.status(200).redirect('../userpage.html');
 //   else res.status(404).send('could not find username and/or password');
@@ -27,21 +27,18 @@ app.get('/', (req, res, next) => {
 // user should be presented with a new card page after successful signup
 // app.post('/signin', userController.verify, sessionController.startSession, cardController.getCards, (req, res, next) => {
 //   if (res.locals.result) res.status(200).send();
-app.post('/signin',
-  userController.verify,
-  sessionController.startSession,
-  (req, res) => {
-    return (res.locals.result)
-      ? res.status(200).send()
-      : res.status(401).send();
-  });
+
+app.post('/signin', userController.verify, sessionController.startSession, (req, res, next) => {
+  if (res.locals.result) res.status(200).redirect(`${req.baseUrl}/secret`);
+  else res.status(404).send('could not find username and/or password');
+});
 
 app.get('/secret', sessionController.isLoggedIn, (req, res, next) => {
   res.status(200).send('secret page!');
 });
 
 app.post('/signup', userController.signup, (req, res, next) => {
-  if (res.locals.result) res.status(200).redirect(req.baseUrl + '/secret');
+  if (res.locals.result) res.status(200).redirect(`${req.baseUrl}/secret`);
   else res.status(404).send('SHENANIGANS :(');
 });
 
@@ -51,7 +48,8 @@ app.post('/newjobcard', cardController.addCard, (req, res) => {
 });
 
 app.get('/getCards', cardController.getCards, (req, res, next) => {
-  if (res.locals.result) res.status(200).send();
+  console.log(res.locals.result);
+  if (res.locals.result) res.status(200).send(res.locals.result);
   else res.status(404).send('SHENANIGANS :(');
 });
 

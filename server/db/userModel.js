@@ -1,8 +1,9 @@
 const pg = require('pg');
 const bcrypt = require('bcrypt');
+
 const saltRounds = 10;
 
-const uri = 'postgres://pfa:pfa@localhost/jobs_db';
+const uri = 'postgres://pfa:pfa@localhost/jobs';
 const client = new pg.Client(uri);
 
 client.connect((err) => {
@@ -15,10 +16,12 @@ client.connect((err) => {
 
 const userModel = {};
 
-client.query(`
+client
+  .query(
+    `
   CREATE TABLE IF NOT EXISTS users
     (
-      id serial PRIMARY KEY,
+      _id SERIAL PRIMARY KEY,
       f_name VARCHAR(100),
       l_name VARCHAR(100),
       username text UNIQUE NOT NULL,
@@ -26,13 +29,16 @@ client.query(`
       password text NOT NULL,
       created TIMESTAMP NOT NULL
   );
-`)
-  .catch(e => console.error('ERROR in userModel', e.stack))
+`,
+  )
+  .then(res => console.log(res.rows[0]))
+  .catch(e => console.error(e.stack));
 
 userModel.verify = async (req) => {
   const { username, password, email } = req.body;
-  console.log(req.body, 'in sign in (userModel)');
-  return client.query(`SELECT * FROM users WHERE username = '${username}'`)
+  console.log(req.body, 'in sign in');
+  return client
+    .query(`SELECT * FROM users WHERE username = '${username}'`)
     .then((res) => {
       if (bcrypt.compareSync(password, res.rows[0].password)) {
         return true;
@@ -45,18 +51,23 @@ userModel.verify = async (req) => {
     });
 };
 
-// By default node-postgres reads rows and collects them into 
-// JavaScript objects with the keys matching the column names 
+// By default node-postgres reads rows and collects them into
+// JavaScript objects with the keys matching the column names
 // and the values matching the corresponding row value for each column
 userModel.createUser = async (req, res) => {
-  const { f_name, l_name, username, email, password } = req.body;
+  const {
+    f_name, l_name, username, email, password,
+  } = req.body;
   const salt = bcrypt.genSaltSync(saltRounds);
   const hash = bcrypt.hashSync(password, salt);
 
   // CREATE TABLE users if it doesn't exist
   // a unique psql id and date_created value should be returned
   const created = '014-03-11 19:39:40';
-  return client.query(`
+  return (
+    client
+      .query(
+        `
     INSERT INTO users 
     (f_name, l_name, username, email, password, created)
     VALUES 
@@ -68,25 +79,26 @@ userModel.createUser = async (req, res) => {
         '${hash}', 
         '${created}'
       )
-    RETURNING id, created;
-  `)
-    .then((result) => {
-      //req object is read-only
-      //create property on res object to store psql-generated uuid
-      return true;
+    RETURNING _id, created;
+  `,
+      )
+      .then((result) => {
+        true;
+      })
 
-//   return client.query(`INSERT INTO users (f_name, l_name, username, email, password) VALUES ('${f_name}', '${l_name}', '${username}', '${email}', '${hash}')`)
-//     .then((res) => {
-//       return true;
-//     })
-//     .catch((err) => {
-//       console.log('ERROR with creating user in database', err);
-//       return false;
-    })
-    .catch((err) => {
-      console.log('ERROR with creating user in database', err);
-      return false;
-    });
+    //   return client.query(`INSERT INTO users (f_name, l_name, username, email, password) VALUES ('${f_name}', '${l_name}', '${username}', '${email}', '${hash}')`)
+    //     .then((res) => {
+    //       return true;
+    //     })
+    //     .catch((err) => {
+    //       console.log('ERROR with creating user in database', err);
+    //       return false;
+
+      .catch((err) => {
+        console.log('ERROR with creating user in database', err);
+        return false;
+      })
+  );
 };
 
 module.exports = userModel;
