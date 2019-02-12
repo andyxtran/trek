@@ -1,6 +1,10 @@
 const pg = require('pg');
 
+<<<<<<< HEAD
+const uri = 'postgres://victor:victor@localhost/jobs';
+=======
 const uri = 'postgres://nabcaedd:IXA9N6DfZg4bNpJJb3A6JgC9rI8EZNWG@stampy.db.elephantsql.com:5432/nabcaedd';
+>>>>>>> eead14fa3d1430b33961992441864059e1a51a3e
 const client = new pg.Client(uri);
 
 client.connect((err) => {
@@ -52,6 +56,7 @@ cardModel.createCard = async (req, res) => {
     priority,
     username,
   } = req.body;
+
   return client
     .query(
       `

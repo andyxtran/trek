@@ -3,23 +3,25 @@ import { Redirect, Route } from 'react-router';
 import '../css/Dashboard.css';
 import JobApplied from './JobApplied';
 
-
 class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoggedIn: false
+      isLoggedIn: true
     }
 
     this.toggleModal = this.toggleModal.bind(this);
   }
 
   componentWillMount() {
-    if (window.sessionStorage.getItem('Authorized') === 'true') {
-      this.setState({
-        isLoggedIn: true
+    const jwtValue = this.props.location.state.jwt;
+    fetch('/verifyJwt', {
+      // pass JWT in body
+    })
+      .then(res => res.json())
+      .then(res => {
+        // if success, set state is logged in to true
       })
-    }
   }
 
   toggleModal() {

@@ -1,11 +1,13 @@
 const jwt = require('jsonwebtoken');
-const User = require('../db/userModel');
 
 const sessionController = {};
 
 sessionController.startSession = (req, res, next) => {
-  const jwtPayload = { username : req.body.username };
-  res.cookie('ssid', jwt.sign(jwtPayload, 'JWT_SECRET_KEY', { expiresIn: 30000 }), { HttpOnly: true });
+  const jwtPayload = { username: req.body.username };
+  const jwtValue = jwt.sign(jwtPayload, 'JWT_SECRET_KEY', { expiresIn: 30000 });
+  res.cookie('ssid', jwtValue, { httpOnly: true });
+  req.locals = { jwt: jwtValue };
+
   next();
 };
 
@@ -14,10 +16,8 @@ sessionController.isLoggedIn = async (req, res, next) => {
   if (!ssid) return null;
   try {
     jwt.verify(ssid, 'JWT_SECRET_KEY');
-    console.log('verified session!');
     next();
   } catch (err) {
-    console.log('expired token');
     res.redirect('http://localhost:3000/');
   }
 };

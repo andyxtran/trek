@@ -11,7 +11,13 @@ const bcrypt = require('bcrypt');
 
 const saltRounds = 10;
 
+<<<<<<< HEAD
+const uri = 'postgres://victor:victor@localhost/jobs';
+const client = new pg.Client(uri);
+
+=======
 // opening up a connection to the database
+>>>>>>> eead14fa3d1430b33961992441864059e1a51a3e
 client.connect((err) => {
   err ? console.log(err) : console.log('connected to psql db');
 });
