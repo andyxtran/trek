@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
-import { NavLink } from 'react-router-dom'
+import { NavLink, Redirect } from 'react-router-dom'
 import '../css/LoginForm.css';
 
 class LoginForm extends Component {
@@ -10,6 +10,7 @@ class LoginForm extends Component {
     this.state = {
       username: '',
       password: '',
+      loginError: false
     }
     this.updateState = this.updateState.bind(this);
     this.submitState = this.submitState.bind(this);
@@ -20,12 +21,13 @@ class LoginForm extends Component {
       [event.target.name]: event.target.value
     }
     this.setState(input);
-    //console.log(this.state);
   }
 
-  submitState() {
+  submitState(e) {
+    e.preventDefault();
+
     if (this.state.username === '' || this.state.password === '') {
-      alert("Must fill username AND password")
+      alert("Must fill username AND password");
     } else {
       let data = this.state
 
@@ -37,28 +39,45 @@ class LoginForm extends Component {
         body: JSON.stringify(data)
       })
         .then(res => {
-          if (res.redirected === true) {
-            // this.props.history.push('/secret')
-            // window.location.reload(); // temporary fix
+          if (res.status === 200) {
+            // this.props.history is used to redirect the user to 
+            // another router from outside the render() method
             window.sessionStorage.setItem('Authorized', 'true');
-            this.props.toggleModal();
+            this.props.history.push('/dashboard');
+          } else {
+            this.setState({ loginError: true, username: '', password: '' });
           }
         });
     }
   }
 
   render() {
+    if (window.sessionStorage.getItem('Authorized') === 'true') {
+      return <Redirect to='/dashboard' />;
+    }
+
+    let errorMessage = [];
+    if (this.state.loginError) {
+      errorMessage.push(<span>Username/password not found.</span>);
+    }
+
     return (
-      <div className="login-form-container v-flex">
-        <p>User Name:</p>
-        <input type="text" name="username" placeholder="User Name (Required)" value={this.state.username}
-          onChange={this.updateState} />
-        <p>Password:</p>
-        <input type="text" name="password" placeholder="Password (Required)" value={this.state.password}
-          onChange={this.updateState} />
-        <button onClick={this.submitState}>Login</button>
-        <NavLink to='/register'><button>Sign Up</button></NavLink>
-      </div>
+      <form onSubmit={this.submitState} className="login-form-container v-flex">
+        <label htmlFor="login_form_username">User Name:</label>
+        <input type="text" id="login_form_username" name="username" 
+          placeholder="User Name (Required)" value={this.state.username}
+          required onChange={this.updateState} />
+
+        <label htmlFor="login_form_password">Password:</label>
+        <input type="password" id="login_form_password" name="password" 
+          placeholder="Password (Required)" value={this.state.password}
+          required onChange={this.updateState} />
+
+          {errorMessage}
+
+        <button type="submit">Login</button>
+        <NavLink to="/register"><button>Sign Up</button></NavLink>
+      </form>
     );
   }
 }

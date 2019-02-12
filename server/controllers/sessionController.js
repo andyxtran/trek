@@ -13,11 +13,11 @@ sessionController.isLoggedIn = async (req, res, next) => {
   const { ssid } = req.cookies;
   if (!ssid) return null;
   try {
-    jwt.verify(ssid, 'JWT_SECRET_KEY')
+    jwt.verify(ssid, 'JWT_SECRET_KEY');
     console.log('verified session!');
     next();
   } catch (err) {
-    console.log('expired token')
+    console.log('expired token');
     res.redirect('http://localhost:3000/');
   }
 };
