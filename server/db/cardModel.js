@@ -1,10 +1,6 @@
 const pg = require('pg');
 
-<<<<<<< HEAD
-const uri = 'postgres://victor:victor@localhost/jobs';
-=======
 const uri = 'postgres://nabcaedd:IXA9N6DfZg4bNpJJb3A6JgC9rI8EZNWG@stampy.db.elephantsql.com:5432/nabcaedd';
->>>>>>> eead14fa3d1430b33961992441864059e1a51a3e
 const client = new pg.Client(uri);
 
 client.connect((err) => {
@@ -36,10 +32,9 @@ client
       created_date TIMESTAMP DEFAULT NOW(),
       last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
-  `)
-  .then((res) => {
-    return res;
-  })
+  `,
+  )
+  .then(res => res)
   .catch(e => console.error('ERROR in cardModel', e.stack));
 
 // create a new card that is tied to a unique user

@@ -28,21 +28,7 @@ app.get('/', (req, res, next) => {
 // app.post('/signin', userController.verify, sessionController.startSession, cardController.getCards, (req, res, next) => {
 //   if (res.locals.result) res.status(200).send();
 
-<<<<<<< HEAD
-app.post('/signin',
-  userController.verify,
-  sessionController.startSession,
-  (req, res) => res.status(200).json({ jwt: req.locals.jwt }));
-=======
-app.post('/signin', userController.verify, sessionController.startSession, (req, res, next) => {
-  if (res.locals.result) res.status(200).send('you are signed in');
-  else res.status(404).send('could not find username and/or password');
-});
-
-app.get('/secret', sessionController.isLoggedIn, (req, res, next) => {
-  res.status(200).send('secret page!');
-});
->>>>>>> eead14fa3d1430b33961992441864059e1a51a3e
+app.post('/signin', userController.verify, sessionController.startSession, (req, res) => res.status(200).json({ jwt: req.locals.jwt }));
 
 app.post('/signup', userController.signup, (req, res, next) => {
   if (res.locals.result) res.status(200).send('you are signed up!');
