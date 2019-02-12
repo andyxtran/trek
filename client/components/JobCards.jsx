@@ -3,18 +3,28 @@ import '../css/JobCards.css';
 
 class JobCards extends Component {
   constructor(props) {
-    super(props)
+    super(props);
   }
   render() {
+    const { 
+      title,  company, description, location, salary, notes, 
+      contact, link, priority, created_date, last_updated 
+    } = this.props.jobsArray;
     return (
       <div className="jobCards">
-        <label>Job title: </label><span>{'------- '}</span><br />
-        <label>Company: </label><span>{'------- '}</span><br />
-        <label>Job Description: </label><span>{'------ '}</span><br />
-        <label>Job Location: </label><span>{'-------'}</span><br />
-        <label>URL: </label><span>{'-------'}</span><br />
-        <label>Salary range: </label><span>{'------- '}</span><br />
-        <label>Note: </label><span>{'------- '}</span><br />
+        <ul>
+          <li>Title: {title}</li>
+          <li>Company: {company}</li>
+          <li>Description: {description}</li>
+          <li>Location: {location}</li>
+          <li>Salary: {salary}</li>
+          <li>Contact: {contact}</li>
+          <li>Link: {link}</li>
+          <li>Priority: {priority}</li>
+          <li>Created at: {created_date}</li>
+          <li>Updated at: {last_updated}</li>
+          <li>Notes: {notes}</li>
+        </ul>
       </div>
     )
   }
