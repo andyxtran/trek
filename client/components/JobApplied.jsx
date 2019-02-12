@@ -7,36 +7,29 @@ class JobApplied extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      jobsArray: [
-      {
-      card_id: 1,
-      title: 'Senior Engineer',
-      company: 'Google',
-      description: 'NY position for google',
-      location: 'Manhattan, NY',
-      salary: 190000,
-      notes: 'This is my dream job!',
-      contact: 'Sundar',
-      priority: 1,
-      link: 'www.google.com/jobapplication',
-      created_date: 'February 5 2019',
-      last_updated: 'February 11 2019'
+      jobsArray: [],
+    }
+    this.pushIntoJobsArray = this.pushIntoJobsArray.bind(this);
+  }
+
+  pushIntoJobsArray(card) {
+    this.setState({
+      jobsArray: [...this.state.jobsArray, card],
+    })
+  }
+
+  componentDidMount() {
+    fetch('/getcards', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
       },
-      {
-        card_id: 2,
-        title: 'Mid Engineer',
-        company: 'Facebook',
-        description: 'NY position for FB',
-        location: 'Manhattan, NY',
-        salary: 150000,
-        notes: 'Hacksss!',
-        contact: 'Zuckerberg',
-        priority: 2,
-        link: 'www.facebook.com/jobapplication',
-        created_date: 'February 6 2019',
-        last_updated: 'February 10 2019'
-        }
-    ]}
+      body: JSON.stringify({ username: this.props.username })
+    })
+    .then(res => res.json())
+    .then(res => {
+      this.setState({ jobsArray: res });
+    })
   }
 
   render() {
@@ -46,7 +39,7 @@ class JobApplied extends Component {
     })
     return (
       <div className="job-posting-container v-flex">
-        <AddCard />
+        <AddCard username={this.props.username} pushIntoJobsArray={this.pushIntoJobsArray} />
         {jobsToRender}
       </div>
     )
