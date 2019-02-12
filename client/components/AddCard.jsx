@@ -52,7 +52,7 @@ class AddCard extends Component {
 
   render() {
       return(
-          <div>
+          <form>
               Job title:
               <input type = "text" name = "jobTitle" value = {this.state.jobTitle}
               onChange = {this.updateState} /> <br/>
@@ -76,7 +76,7 @@ class AddCard extends Component {
               onChange = {this.updateState} /> <br/>
               <button onClick={this.addCard}>Add Card</button>
               <button onClick={this.deleteCard}>Delete Card</button>
-          </div>
+          </form>
       )
   }
 }

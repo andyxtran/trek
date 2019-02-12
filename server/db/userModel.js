@@ -27,12 +27,11 @@ client.query(`
       created TIMESTAMP NOT NULL
   );
 `)
-  .then(res => console.log(res.rows[0]))
-  .catch(e => console.error(e.stack))
+  .catch(e => console.error('ERROR in userModel', e.stack))
 
 userModel.verify = async (req) => {
   const { username, password, email } = req.body;
-  console.log(req.body, 'in sign in');
+  console.log(req.body, 'in sign in (userModel)');
   return client.query(`SELECT * FROM users WHERE username = '${username}'`)
     .then((res) => {
       if (bcrypt.compareSync(password, res.rows[0].password)) {

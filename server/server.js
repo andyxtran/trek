@@ -24,18 +24,21 @@ app.get('/', (req, res, next) => {
 //   else res.status(404).send('could not find username and/or password');
 // });
 
-//user should be presented with a new card page after successful signup
+// user should be presented with a new card page after successful signup
 // app.post('/signin', userController.verify, sessionController.startSession, cardController.getCards, (req, res, next) => {
 //   if (res.locals.result) res.status(200).send();
-app.post('/signin', userController.verify, sessionController.startSession, (req, res, next) => {
-  if (res.locals.result) res.status(200).redirect(req.baseUrl + '/secret');
-
-  else res.status(404).send('could not find username and/or password');
-});
+app.post('/signin',
+  userController.verify,
+  sessionController.startSession,
+  (req, res) => {
+    return (res.locals.result)
+      ? res.status(200).send()
+      : res.status(401).send();
+  });
 
 app.get('/secret', sessionController.isLoggedIn, (req, res, next) => {
   res.status(200).send('secret page!');
-})
+});
 
 app.post('/signup', userController.signup, (req, res, next) => {
   if (res.locals.result) res.status(200).redirect(req.baseUrl + '/secret');
@@ -45,7 +48,7 @@ app.post('/signup', userController.signup, (req, res, next) => {
 app.post('/newjobcard', cardController.addCard, (req, res) => {
   if (res.locals.result) res.status(200).send('New Job card created');
   else res.status(404).send('No good');
-})
+});
 
 app.get('/getCards', cardController.getCards, (req, res, next) => {
   if (res.locals.result) res.status(200).send();

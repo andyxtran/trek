@@ -31,7 +31,7 @@ client.query(`
   .then((res) => {
     return res;
   })
-  .catch(e => console.error(e.stack));
+  .catch(e => console.error('ERROR in cardModel', e.stack));
 
 // create a new card that is tied to a unique user
 cardModel.createCard = async (req, res) => {
