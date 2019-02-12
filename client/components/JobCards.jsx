@@ -21,8 +21,8 @@ class JobCards extends Component {
           <li>Contact: {contact}</li>
           <li>Link: {link}</li>
           <li>Priority: {priority}</li>
-          <li>Created at: {created_date}</li>
-          <li>Updated at: {last_updated}</li>
+          <li>Created at: {(new Date(created_date)).toLocaleDateString()}</li>
+          <li>Updated at: {(new Date(last_updated)).toLocaleDateString()}</li>
           <li>Notes: {notes}</li>
         </ul>
       </div>

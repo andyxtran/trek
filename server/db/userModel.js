@@ -11,13 +11,7 @@ const bcrypt = require('bcrypt');
 
 const saltRounds = 10;
 
-<<<<<<< HEAD
-const uri = 'postgres://victor:victor@localhost/jobs';
-const client = new pg.Client(uri);
-
-=======
 // opening up a connection to the database
->>>>>>> eead14fa3d1430b33961992441864059e1a51a3e
 client.connect((err) => {
   err ? console.log(err) : console.log('connected to psql db');
 });
@@ -44,8 +38,7 @@ client
   .catch(e => console.error(e.stack));
 
 userModel.verify = async (req) => {
-  const { username, password, email } = req.body;
-  console.log(req.body, 'in sign in');
+  const { username, password } = req.body;
   return client
     .query(`SELECT * FROM users WHERE username = '${username}'`)
     .then((res) => {

@@ -1,10 +1,6 @@
 const pg = require('pg');
 
-<<<<<<< HEAD
-const uri = 'postgres://victor:victor@localhost/jobs';
-=======
 const uri = 'postgres://nabcaedd:IXA9N6DfZg4bNpJJb3A6JgC9rI8EZNWG@stampy.db.elephantsql.com:5432/nabcaedd';
->>>>>>> eead14fa3d1430b33961992441864059e1a51a3e
 const client = new pg.Client(uri);
 
 client.connect((err) => {
@@ -23,8 +19,8 @@ client
   CREATE TABLE IF NOT EXISTS cards
     (   
       card_id SERIAL PRIMARY KEY,
-      title TEXT NOT NULL,
-      company VARCHAR(100) NOT NULL,
+      title TEXT NOT NULL CHECK (title <> ''),
+      company VARCHAR(100) NOT NULL CHECK (company <> ''),
       description VARCHAR(500),
       location TEXT,
       link TEXT,
@@ -32,7 +28,7 @@ client
       notes TEXT,
       contact TEXT,
       priority INTEGER,
-      username TEXT,
+      username TEXT NOT NULL CHECK (username <> ''),
       created_date TIMESTAMP DEFAULT NOW(),
       last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
@@ -76,11 +72,8 @@ cardModel.createCard = async (req, res) => {
     );
   `,
     )
-    .then(() => true)
-    .catch((err) => {
-      console.log('ERROR with creating card in database', err);
-      return false;
-    });
+    .then(() => ({ cardInserted: true }))
+    .catch(() => ({ cardInserted: false }));
 };
 
 cardModel.updateCard = async (req, res) => {

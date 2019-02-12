@@ -7,33 +7,44 @@ class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoggedIn: true
+      isLoggedIn: false,
+      loadingPage: true,
+      username: ''
     }
-
-    this.toggleModal = this.toggleModal.bind(this);
   }
 
-  componentWillMount() {
-    const jwtValue = this.props.location.state.jwt;
-    fetch('/verifyJwt', {
-      // pass JWT in body
+  componentDidMount() {
+    if (!this.props.location.state) {
+      return this.setState({ loadingPage: false });
+    }
+    fetch('/validateJwt', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ jwt: this.props.location.state.jwt })
     })
-      .then(res => res.json())
-      .then(res => {
-        // if success, set state is logged in to true
-      })
-  }
-
-  toggleModal() {
-    this.setState({
-      isLoggedIn: !this.state.isLoggedIn
-    });
+    .then(res => res.json())
+    .then(res => {
+      if (res.validated) {
+        return this.setState({ loadingPage: false, isLoggedIn: true, username: res.username });
+      }
+      return this.setState({ loadingPage: false });
+    })
   }
 
   render() {
-    return this.state.isLoggedIn ? 
-      <JobApplied /> :
-      <Redirect to='/' />; 
+    if (this.state.loadingPage) {
+      return (
+        <div>
+          Loading...
+        </div>
+      )
+    } else {
+      return this.state.isLoggedIn ? 
+      <JobApplied username={this.state.username} /> :
+      <Redirect to='/' />;
+    } 
   }   
 }
 

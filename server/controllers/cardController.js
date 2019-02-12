@@ -2,10 +2,9 @@ const Cards = require('../db/cardModel');
 
 const cardController = {};
 
-cardController.addCard = async (req, res, next) => {
+cardController.addCard = async (req, res) => {
   const result = await Cards.createCard(req);
-  res.locals.result = result;
-  next();
+  res.json(result);
 };
 
 cardController.updateCard = async (req, res, next) => {
@@ -21,11 +20,9 @@ cardController.deleteCard = async (req, res, next) => {
 };
 
 // should return an array of results
-cardController.getCards = async (req, res, next) => {
+cardController.getCards = async (req, res) => {
   const result = await Cards.getCards(req);
-  console.log('the result is', result);
-  res.locals.result = JSON.stringify(result);
-  next();
+  res.json(result);
 };
 
 module.exports = cardController;
