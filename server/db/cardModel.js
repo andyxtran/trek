@@ -116,7 +116,7 @@ cardModel.updateCard = async (req, res) => {
 // DELETE row in cards that match card_id
 cardModel.deleteCard = async (req, res) => {
   const { card_id } = req.body;
-
+  console.log('deletcard is running in the server. card_id:', card_id);
   return client
     .query(`DELETE FROM cards WHERE card_id = ${card_id};`)
     .then(res => true)

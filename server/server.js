@@ -31,10 +31,7 @@ app.get('/', (req, res, next) => {
 // <<<<<<< master
 // app.post('/signin', userController.verify, sessionController.startSession, (req, res) => res.status(200).json({ jwt: req.locals.jwt }));
 // =======
-app.post('/signin',
-  userController.verify,
-  sessionController.startSession,
-  (req, res) => res.status(200).json({ jwt: req.locals.jwt }));
+app.post('/signin', userController.verify, sessionController.startSession, (req, res) => res.status(200).json({ jwt: req.locals.jwt }));
 
 app.post('/validateJwt', sessionController.validateJwt);
 // >>>>>>> master
@@ -53,7 +50,7 @@ app.put('/updatecards', cardController.updateCard, (req, res, next) => {
   else res.status(404).send('SHENANIGANS problems updating card :(');
 });
 
-app.post('/deletecards', cardController.deleteCard, (req, res, next) => {
+app.delete('/deletecards', cardController.deleteCard, (req, res, next) => {
   if (res.locals.result) res.status(200).send('CARD SUCCESSFULLY DELETED!');
   else res.status(404).send('SHENANIGANS :(');
 });

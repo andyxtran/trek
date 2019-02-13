@@ -5,44 +5,45 @@ import '../css/JobPostings.css';
 
 class JobApplied extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       jobsArray: [],
-    }
+    };
     this.pushIntoJobsArray = this.pushIntoJobsArray.bind(this);
   }
 
   pushIntoJobsArray(card) {
     this.setState({
       jobsArray: [...this.state.jobsArray, card],
-    })
+    });
   }
 
   componentDidMount() {
     fetch('/getcards', {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ username: this.props.username })
+      body: JSON.stringify({ username: this.props.username }),
     })
-    .then(res => res.json())
-    .then(res => {
-      this.setState({ jobsArray: res });
-    })
+      .then(res => res.json())
+      .then(res => {
+        this.setState({ jobsArray: res });
+      });
   }
 
   render() {
+    console.log('JobsApplied.jsx state.jobsArray: ', this.state.jobsArray);
     const jobsToRender = [];
     this.state.jobsArray.forEach(job => {
-      jobsToRender.push(<JobCards jobsArray={job} />)
-    })
+      jobsToRender.push(<JobCards jobsArray={job} />);
+    });
     return (
       <div className="job-posting-container v-flex">
         <AddCard username={this.props.username} pushIntoJobsArray={this.pushIntoJobsArray} />
         {jobsToRender}
       </div>
-    )
+    );
   }
 }
 
