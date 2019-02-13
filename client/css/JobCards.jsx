@@ -11,13 +11,19 @@ export default styled.div`
   h2 {
     text-align: center;
     justify-content: space-between;
-    margin-top: 2px;
+    margin-top: 0px;
     width: 100%;
+    background-color: pink;
+    color: white
     border-bottom: 3px solid pink;
   }
   div {
     background-color: white;
     margin: 5px;
     border: 3px solid pink;
+  }
+
+  li {
+    text-decoration-
   }
 `;
