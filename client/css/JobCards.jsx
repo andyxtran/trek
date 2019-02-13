@@ -21,9 +21,18 @@ export default styled.div`
     background-color: white;
     margin: 5px;
     border: 3px solid pink;
+    border-radius: 0.5em;
   }
 
   li {
-    text-decoration-
+    text-decoration: none;
+    list-style-type: circle; 
   }
+ span {
+   display: flex; 
+   justify-content: center;
+   align-items: center; 
+   padding-bottom: 0.5em;
+
+ }
 `;
