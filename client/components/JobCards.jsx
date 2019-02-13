@@ -12,8 +12,8 @@ class JobCards extends Component {
     } = this.props.jobsArray;
     return (
       <div>
+        <h2>{title}</h2>
         <ul>
-          <li>Title: {title}</li>
           <li>Company: {company}</li>
           <li>Description: {description}</li>
           <li>Location: {location}</li>

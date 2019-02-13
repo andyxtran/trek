@@ -9,11 +9,10 @@ class AddCardModal extends Component {
       <AddCardModalWrapper>
           <span onClick={this.props.displayModal} 
             className="close_modal_btn">x</span>
-          <AddCard username={this.props.username} pushIntoJobsArray={this.pushIntoJobsArray} />
+          <AddCard displayModal={this.props.displayModal} username={this.props.username} pushIntoJobsArray={this.props.pushIntoJobsArray} />
       </AddCardModalWrapper>
     )
   }
-
 }
 
 

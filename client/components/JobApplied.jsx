@@ -50,7 +50,7 @@ class JobApplied extends Component {
       jobsToRender.push(<JobCards jobsArray={job} />)
     })
     if (this.state.displayModal) {
-      addCardModal.push(<AddCardModal displayModal={this.displayModal}/>);
+      addCardModal.push(<AddCardModal pushIntoJobsArray = {this.pushIntoJobsArray} displayModal={this.displayModal}/>);
     }
     return (
       <DashboardWrapper>
