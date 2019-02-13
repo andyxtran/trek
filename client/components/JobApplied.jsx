@@ -9,48 +9,82 @@ import CardWrapper from '../css/JobCards.jsx';
 
 class JobApplied extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       jobsArray: [],
       displayModal: false,
-    }
+    };
     this.pushIntoJobsArray = this.pushIntoJobsArray.bind(this);
+    this.removeFromJobsArray = this.removeFromJobsArray.bind(this);
     this.displayModal = this.displayModal.bind(this);
   }
 
   pushIntoJobsArray(card) {
     this.setState({
       jobsArray: [...this.state.jobsArray, card],
-    })
+    });
+  }
+
+  removeFromJobsArray(cardID) {
+    const updatedArray = this.state.jobsArray.reduce((acc, cur) => {
+      if (cur['card_id'] === cardID) return acc;
+      acc.push(cur);
+      return acc;
+    }, []);
+    this.setState({
+      jobsArray: updatedArray,
+    });
   }
 
   displayModal() {
-    this.setState({ displayModal: !this.state.displayModal }) 
+    this.setState({ displayModal: !this.state.displayModal });
+  }
+  fetchData() {
+    fetch('/getcards', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username: this.props.username }),
+    })
+      .then(res => res.json())
+      .then(res => {
+        this.setState({ jobsArray: res });
+      });
   }
 
+  componentDidUpdate() {
+    this.fetchData();
+  }
   componentDidMount() {
-    fetch('/getcards', {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ username: this.props.username })
-    })
-    .then(res => res.json())
-    .then(res => {
-      this.setState({ jobsArray: res });
-    })
+    this.fetchData();
   }
 
   render() {
-    const addCardModal = [];
+    // console.log('JobsApplied.jsx state.jobsArray: ', this.state.jobsArray);
     const jobsToRender = [];
+    const addCardModal = [];
 
-    this.state.jobsArray.forEach(job => {
-      jobsToRender.push(<JobCards jobsArray={job} />)
-    })
+    this.state.jobsArray.forEach((job, i) => {
+      jobsToRender.push(
+        <JobCards
+          jobsArray={job}
+          index={i}
+          key={i}
+          removeFromJobsArray={this.removeFromJobsArray}
+          pushIntoJobsArray={this.pushIntoJobsArray}
+        />,
+      );
+    });
+
     if (this.state.displayModal) {
-      addCardModal.push(<AddCardModal displayModal={this.displayModal}/>);
+      addCardModal.push(
+        <AddCardModal
+          displayModal={this.displayModal}
+          pushIntoJobsArray={this.pushIntoJobsArray}
+          username={this.props.username}
+        />,
+      );
     }
     return (
       <DashboardWrapper>
@@ -59,11 +93,9 @@ class JobApplied extends Component {
           <Header />
           <button onClick={this.displayModal}>Add Card</button>
         </nav>
-        <CardWrapper>
-        {jobsToRender}
-        </CardWrapper>
+        <CardWrapper>{jobsToRender}</CardWrapper>
       </DashboardWrapper>
-    )
+    );
   }
 }
 
