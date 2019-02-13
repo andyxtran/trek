@@ -47,7 +47,7 @@ app.get('/getCards', cardController.getCards, (req, res, next) => {
 
 app.put('/updateCards', cardController.updateCard, (req, res, next) => {
   if (res.locals.result) res.status(200).send('CARD SUCCESSFULLY UPDATED!');
-  else res.status(404).send('SHENANIGANS :(');
+  else res.status(404).send('SHENANIGANS problems updating card :(');
 });
 
 app.post('/deleteCards', cardController.deleteCard, (req, res, next) => {
