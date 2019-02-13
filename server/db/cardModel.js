@@ -32,10 +32,9 @@ client
       created_date TIMESTAMP DEFAULT NOW(),
       last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
-  `)
-  .then((res) => {
-    return res;
-  })
+  `,
+  )
+  .then(res => res)
   .catch(e => console.error('ERROR in cardModel', e.stack));
 
 // create a new card that is tied to a unique user
@@ -78,30 +77,38 @@ cardModel.createCard = async (req, res) => {
 
 cardModel.updateCard = async (req, res) => {
   const {
-    jobTitle, company, jobDescription, jobLocation, url, salaryRange, note,
+    card_id,
+    title,
+    company,
+    description,
+    location,
+    link,
+    salary,
+    notes,
+    contact,
+    priority,
+    username,
   } = req.body;
-  const updated = Date();
+
   return client
     .query(
-      `
-    UPDATE cards SET 
-      jobTitle = title, company = company, jobDescription = jobDescription, 
-      jobLocation = jobLocation, url = url, salaryRange = salaryRange, note = note) 
-    VALUES (
-      ${jobTitle}, 
-      ${company}, 
-      ${jobDescription}, 
-      ${jobLocation}, 
-      ${url}, 
-      ${salaryRange}, 
-      ${note}, 
-      ${updated}
-    );
-  `,
+      `UPDATE cards
+       SET
+       title = '${title}',
+       company = '${company}',
+       description = '${description}',
+       location = '${location}',
+       link = '${link}',
+       salary = '${salary}',
+       notes = '${notes}',
+       contact = '${contact}',
+       priority = '${priority}'
+       WHERE card_id = '${card_id}'
+       ;`,
     )
-    .then(res => true)
+    .then(res => res)
     .catch((err) => {
-      console.log('ERROR with updating card in database', err);
+      console.log('err in cardModel', err);
       return false;
     });
 };
