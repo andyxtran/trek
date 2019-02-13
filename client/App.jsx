@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Router, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Dashboard from './components/Dashboard';
-import Login from './components/LoginForm';
+import LoginForm from './components/LoginForm';
 import SignUp from './components/SignUpForm';
 import './css/App.css';
 import createBrowserHistory from 'history/createBrowserHistory'
@@ -28,7 +28,7 @@ class App extends Component {
             avatar={this.state.avatar}
           />
 
-          <Route exact path='/' component={Login} />
+          <Route exact path='/' component={LoginForm} />
           <Route path='/register' component={SignUp} />
           <Route path='/dashboard' component={Dashboard} />
         </div>
