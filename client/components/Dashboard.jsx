@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Redirect, Route } from 'react-router';
-import '../css/Dashboard.css';
 import JobApplied from './JobApplied';
 
 class Dashboard extends Component {

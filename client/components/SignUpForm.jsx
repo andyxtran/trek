@@ -1,7 +1,8 @@
 import React, {  Component } from 'react';
 import { NavLink } from 'react-router-dom';
-import '../css/SignUpForm.css';
-
+import FormWrapper from '../css/FormWrapper';
+import SignupWrapper from '../css/SignupWrapper';
+import Header from './Header';
 
 class SignUpForm extends Component {
   constructor(props) {
@@ -61,21 +62,33 @@ class SignUpForm extends Component {
   render() {
     return (
       <div>
-        <div className="signup-form-container v-flex">
-          <p>User Name:</p>
-          <input type="text" name="username" placeholder="User Name (Required)" value={this.state.username} onChange={this.handleChange} />
-          <p>Password:</p>
-          <input type="text" name="password" placeholder="Password (Required)" value={this.state.password} onChange={this.handleChange} />
-          <p>Email:</p>
-          <input type="text" name="email" placeholder="Email (Required)" value={this.state.email} onChange={this.handleChange} />
-          <p>First Name:</p>
-          <input type="text" name="f_name" placeholder="First Name" value={this.state.f_name} onChange={this.handleChange} />
-          <p>Last Name:</p>
-          <input type="text" name="l_name" placeholder="Last Name" value={this.state.l_name} onChange={this.handleChange} />
-          <button onClick={this.handleSubmit}>Sign Up</button>
-          <NavLink to='/'><button>Login</button></NavLink>
-        </div>
+        <Header />
+        <SignupWrapper>
+          <FormWrapper>
+            <h1>Signup</h1>
+            <form>
+              <input type="text" id="signup_username" placeholder="Username (Required)" 
+                value={this.state.username} onChange={this.handleChange} />
 
+              <input type="text" id="signup_password" placeholder="Password (Required)" 
+                value={this.state.password} onChange={this.handleChange} />
+
+              <input type="text" id="signup_email" placeholder="Email (Required)" 
+                value={this.state.email} onChange={this.handleChange} />
+
+              <input type="text" id="signup_f_name" placeholder="First Name" 
+                value={this.state.f_name} onChange={this.handleChange} />
+
+              <input type="text" id="signup_l_name" placeholder="Last Name" 
+                value={this.state.l_name} onChange={this.handleChange} />
+
+              <div className="btns_cont">
+                <NavLink to='/'>Back to login</NavLink>
+                <button onClick={this.handleSubmit}>Sign Up</button>
+              </div>
+            </form>
+          </FormWrapper>
+        </SignupWrapper>
       </div>
     )
   }

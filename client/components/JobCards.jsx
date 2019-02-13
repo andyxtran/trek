@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import '../css/JobCards.css';
 import { withRouter } from 'react-router';
 import { Link, NavLink, Redirect } from 'react-router-dom';
 import UpdateCard from './UpdateCard.jsx';
+import { CardWrapper } from '../css/JobCards.jsx';
 
 class JobCards extends Component {
   constructor(props) {
@@ -72,7 +72,7 @@ class JobCards extends Component {
       );
     }
     return (
-      <div className="jobCards">
+      <div>
         <ul>
           <li>Title: {title}</li>
           <li>Company: {company}</li>

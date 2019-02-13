@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import AddCardWrapper from '../css/AddCardWrapper';
 const jwt = require('jsonwebtoken');
 
 class AddCard extends Component {
@@ -66,90 +67,113 @@ class AddCard extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleFormSubmission}>
-        <label htmlFor="title">Job title:</label>
-        <input
-          type="text"
-          name="title"
-          id="signup_title"
-          value={this.state.title}
-          onChange={this.updateState}
-        />
+      <AddCardWrapper>
+        <h3>Job Details</h3>
+        <form onSubmit={this.handleFormSubmission}>
+          <div>
+            <label htmlFor="title">Job title:</label>
+            <input
+              type="text"
+              name="title"
+              id="signup_title"
+              value={this.state.title}
+              onChange={this.updateState}
+            />
+          </div>
 
-        <label htmlFor="signup_company">Company:</label>
-        <input
-          type="text"
-          name="company"
-          id="signup_company"
-          value={this.state.company}
-          onChange={this.updateState}
-        />
+          <div>
+            <label htmlFor="signup_company">Company:</label>
+            <input
+              type="text"
+              name="company"
+              id="signup_company"
+              value={this.state.company}
+              onChange={this.updateState}
+            />
+          </div>
 
-        <label htmlFor="signup_description">Job Description:</label>
-        <input
-          type="text"
-          name="description"
-          id="signup_description"
-          value={this.state.description}
-          onChange={this.updateState}
-        />
+          <div>
+            <label htmlFor="signup_description">Job Description:</label>
+            <input
+              type="text"
+              name="description"
+              id="signup_description"
+              value={this.state.description}
+              onChange={this.updateState}
+            />
+          </div>
 
-        <label htmlFor="signup_location">Job Location:</label>
-        <input
-          type="text"
-          name="location"
-          id="signup_location"
-          value={this.state.location}
-          onChange={this.updateState}
-        />
+          <div>
+            <label htmlFor="signup_location">Job Location:</label>
+            <input
+              type="text"
+              name="location"
+              id="signup_location"
+              value={this.state.location}
+              onChange={this.updateState}
+            />
+          </div>
 
-        <label htmlFor="signup_link">URL:</label>
-        <input
-          type="text"
-          name="link"
-          id="signup_link"
-          value={this.state.link}
-          onChange={this.updateState}
-        />
+          <div>
+            <label htmlFor="signup_link">URL:</label>
+            <input
+              type="text"
+              name="link"
+              id="signup_link"
+              value={this.state.link}
+              onChange={this.updateState}
+            />
+          </div>
 
-        <label htmlFor="signup_salary">Salary range:</label>
-        <input
-          type="number"
-          name="salary"
-          id="signup_salary"
-          value={this.state.salary}
-          onChange={this.updateState}
-        />
+          <div>
+            <label htmlFor="signup_salary">Salary range:</label>
+            <input
+              type="number"
+              name="salary"
+              id="signup_salary"
+              value={this.state.salary}
+              onChange={this.updateState}
+            />
+          </div>
 
-        <label htmlFor="signup_notes">Note:</label>
-        <input
-          type="text"
-          name="notes"
-          id="signup_notes"
-          value={this.state.notes}
-          onChange={this.updateState}
-        />
+          <div>
+            <label htmlFor="signup_notes">Note:</label>
+            <input
+              type="text"
+              name="notes"
+              id="signup_notes"
+              value={this.state.notes}
+              onChange={this.updateState}
+            />
+          </div>
 
-        <label htmlFor="signup_contact">Contact:</label>
-        <input
-          type="text"
-          name="contact"
-          id="signup_contact"
-          value={this.state.contact}
-          onChange={this.updateState}
-        />
+          <div>
+            <label htmlFor="signup_contact">Contact:</label>
+            <input
+              type="text"
+              name="contact"
+              id="signup_contact"
+              value={this.state.contact}
+              onChange={this.updateState}
+            />
+          </div>
 
-        <label htmlFor="signup_priority">Priority:</label>
-        <input
-          type="number"
-          name="priority"
-          id="signup_priority"
-          value={this.state.priority}
-          onChange={this.updateState}
-        />
+          <div>
+            <label htmlFor="signup_priority">Priority:</label>
+            <input
+              type="number"
+              name="priority"
+              id="signup_priority"
+              value={this.state.priority}
+              onChange={this.updateState}
+            />
+          </div>
 
-        <button type="submit">Add Card</button>
-      </form>
+          <div />
+          <div />
+          <button type="submit">Add Card</button>
+        </form>
+      </AddCardWrapper>
     );
   }
 }

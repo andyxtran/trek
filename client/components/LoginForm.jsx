@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import { NavLink, Redirect } from 'react-router-dom'
-import '../css/LoginForm.css';
+import LoginWrapper from '../css/FormWrapper';
+import Header from './Header';
 
 class LoginForm extends Component {
   constructor(props) {
@@ -55,32 +56,36 @@ class LoginForm extends Component {
   }
 
   render() {
-    if (window.sessionStorage.getItem('Authorized') === 'true') {
-      return <Redirect to='/dashboard' />;
-    }
-
     let errorMessage = [];
     if (this.state.loginError) {
       errorMessage.push(<span>Username/password not found.</span>);
     }
 
     return (
-      <form onSubmit={this.submitState} className="login-form-container v-flex">
-        <label htmlFor="login_form_username">User Name:</label>
-        <input type="text" id="login_form_username" name="username" 
-          placeholder="User Name (Required)" value={this.state.username}
-          required onChange={this.updateState} />
+      <div>
+        <Header />
+        <LoginWrapper>
+          <h1>Login</h1>
+          <form onSubmit={this.submitState} className="login-form-container v-flex">
+            <label htmlFor="login_form_username"></label>
+            <input type="text" id="login_form_username" name="username" 
+              placeholder="Username" value={this.state.username}
+              required onChange={this.updateState} />
 
-        <label htmlFor="login_form_password">Password:</label>
-        <input type="password" id="login_form_password" name="password" 
-          placeholder="Password (Required)" value={this.state.password}
-          required onChange={this.updateState} />
+            <label htmlFor="login_form_password"></label>
+            <input type="password" id="login_form_password" name="password" 
+              placeholder="Password" value={this.state.password}
+              required onChange={this.updateState} />
 
-          {errorMessage}
+              {errorMessage}
 
-        <button type="submit">Login</button>
-        <NavLink to="/register"><button>Sign Up</button></NavLink>
-      </form>
+            <div className="btns_cont">
+              <NavLink to="/register">Create an account</NavLink>
+              <button type="submit">Submit</button>
+            </div>
+          </form>
+        </LoginWrapper>
+      </div>
     );
   }
 }
