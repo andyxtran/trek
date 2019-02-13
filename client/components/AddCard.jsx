@@ -46,6 +46,7 @@ class AddCard extends Component {
           reqBody['created_date'] = new Date().toLocaleDateString();
           reqBody['last_updated'] = new Date().toLocaleDateString();
           this.props.pushIntoJobsArray(reqBody);
+          this.props.displayModal()
           return this.setState({
             title: '',
             company: '',

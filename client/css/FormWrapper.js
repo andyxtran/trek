@@ -13,6 +13,7 @@ export default styled.div`
     padding: 0.3em 0;
     color: #ffb8cb;
     margin: 1.5em 0;
+    text-align: center;
   }
 
   form {
