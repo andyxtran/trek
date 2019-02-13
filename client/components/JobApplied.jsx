@@ -1,21 +1,31 @@
 import React, { Component } from 'react';
 import AddCard from './AddCard';
 import JobCards from './JobCards';
-import '../css/JobPostings.css';
+import Header from './Header';
+import DashboardWrapper from '../css/DashboardWrapper';
+import AddCardModal from './AddCardModal';
+
+import CardWrapper from '../css/JobCards.jsx';
 
 class JobApplied extends Component {
   constructor(props) {
     super(props)
     this.state = {
       jobsArray: [],
+      displayModal: false,
     }
     this.pushIntoJobsArray = this.pushIntoJobsArray.bind(this);
+    this.displayModal = this.displayModal.bind(this);
   }
 
   pushIntoJobsArray(card) {
     this.setState({
       jobsArray: [...this.state.jobsArray, card],
     })
+  }
+
+  displayModal() {
+    this.setState({ displayModal: !this.state.displayModal }) 
   }
 
   componentDidMount() {
@@ -33,15 +43,26 @@ class JobApplied extends Component {
   }
 
   render() {
+    const addCardModal = [];
     const jobsToRender = [];
+
     this.state.jobsArray.forEach(job => {
       jobsToRender.push(<JobCards jobsArray={job} />)
     })
+    if (this.state.displayModal) {
+      addCardModal.push(<AddCardModal displayModal={this.displayModal}/>);
+    }
     return (
-      <div className="job-posting-container v-flex">
-        <AddCard username={this.props.username} pushIntoJobsArray={this.pushIntoJobsArray} />
+      <DashboardWrapper>
+        {addCardModal}
+        <nav>
+          <Header />
+          <button onClick={this.displayModal}>Add Card</button>
+        </nav>
+        <CardWrapper>
         {jobsToRender}
-      </div>
+        </CardWrapper>
+      </DashboardWrapper>
     )
   }
 }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../css/JobCards.css';
+import { CardWrapper } from '../css/JobCards.jsx';
 
 class JobCards extends Component {
   constructor(props) {
@@ -11,7 +11,7 @@ class JobCards extends Component {
       contact, link, priority, created_date, last_updated 
     } = this.props.jobsArray;
     return (
-      <div className="jobCards">
+      <div>
         <ul>
           <li>Title: {title}</li>
           <li>Company: {company}</li>
@@ -25,7 +25,7 @@ class JobCards extends Component {
           <li>Updated at: {(new Date(last_updated)).toLocaleDateString()}</li>
           <li>Notes: {notes}</li>
         </ul>
-      </div>
+        </div>
     )
   }
 }
