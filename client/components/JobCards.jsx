@@ -3,6 +3,7 @@ import { withRouter } from 'react-router';
 import { Link, NavLink, Redirect } from 'react-router-dom';
 import UpdateCard from './UpdateCard.jsx';
 import { CardWrapper } from '../css/JobCards.jsx';
+import ButtonWrapper from '../css/ButtonWrapper';
 
 class JobCards extends Component {
   constructor(props) {
@@ -73,9 +74,9 @@ class JobCards extends Component {
     }
     return (
       <div>
-        <h2>{title}</h2>
+        <h2>{company}</h2>
         <ul>
-          <li>Company: {company}</li>
+          <li>Title: {title}</li>
           <li>Description: {description}</li>
           <li>Location: {location}</li>
           <li>Salary: {salary}</li>
@@ -86,8 +87,10 @@ class JobCards extends Component {
           <li>Updated at: {new Date(last_updated).toLocaleDateString()}</li>
           <li>Notes: {notes}</li>
         </ul>
-        <button onClick={this.deleteCard}>Delete Card</button>
-        <button onClick={this.editCard}> edit</button>
+        <span>
+          <ButtonWrapper onClick={this.deleteCard}>delete</ButtonWrapper>
+          <ButtonWrapper onClick={this.editCard}> edit</ButtonWrapper>
+        </span>
       </div>
     );
   }

@@ -10,5 +10,6 @@ export default styled.div`
   nav {
     display: flex;
     border: 4px solid pink;
-  }  
+  }
+  font-family: 'Lato', sans-serif;
 `;
