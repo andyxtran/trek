@@ -8,16 +8,13 @@ cardController.addCard = async (req, res) => {
 };
 
 cardController.updateCard = async (req, res, next) => {
-  console.log('im in cardcontroller, updateCard');
   const result = await Cards.updateCard(req);
-  res.locals.result = result;
-  return next();
+  res.json(result);
 };
 
 cardController.deleteCard = async (req, res, next) => {
   const result = await Cards.deleteCard(req);
-  res.locals.result = result;
-  return next();
+  res.json(result);
 };
 
 // should return an array of results

@@ -45,15 +45,9 @@ app.post('/newjobcard', cardController.addCard);
 
 app.post('/getcards', cardController.getCards);
 
-app.put('/updatecards', cardController.updateCard, (req, res, next) => {
-  if (res.locals.result) res.status(200).send('CARD SUCCESSFULLY UPDATED!');
-  else res.status(404).send('SHENANIGANS problems updating card :(');
-});
+app.put('/updatecards', cardController.updateCard);
 
-app.delete('/deletecards', cardController.deleteCard, (req, res, next) => {
-  if (res.locals.result) res.status(200).send('CARD SUCCESSFULLY DELETED!');
-  else res.status(404).send('SHENANIGANS :(');
-});
+app.delete('/deletecards', cardController.deleteCard);
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../index.html'));

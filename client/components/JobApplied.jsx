@@ -10,6 +10,7 @@ class JobApplied extends Component {
       jobsArray: [],
     };
     this.pushIntoJobsArray = this.pushIntoJobsArray.bind(this);
+    this.removeFromJobsArray = this.removeFromJobsArray.bind(this);
   }
 
   pushIntoJobsArray(card) {
@@ -18,7 +19,18 @@ class JobApplied extends Component {
     });
   }
 
-  componentDidMount() {
+  removeFromJobsArray(cardID) {
+    const updatedArray = this.state.jobsArray.reduce((acc, cur) => {
+      if (cur['card_id'] === cardID) return acc;
+      acc.push(cur);
+      return acc;
+    }, []);
+    this.setState({
+      jobsArray: updatedArray,
+    });
+  }
+
+  fetchData() {
     fetch('/getcards', {
       method: 'POST',
       headers: {
@@ -32,11 +44,26 @@ class JobApplied extends Component {
       });
   }
 
+  componentDidUpdate() {
+    this.fetchData();
+  }
+  componentDidMount() {
+    this.fetchData();
+  }
+
   render() {
-    console.log('JobsApplied.jsx state.jobsArray: ', this.state.jobsArray);
+    // console.log('JobsApplied.jsx state.jobsArray: ', this.state.jobsArray);
     const jobsToRender = [];
-    this.state.jobsArray.forEach(job => {
-      jobsToRender.push(<JobCards jobsArray={job} />);
+    this.state.jobsArray.forEach((job, i) => {
+      jobsToRender.push(
+        <JobCards
+          jobsArray={job}
+          index={i}
+          key={i}
+          removeFromJobsArray={this.removeFromJobsArray}
+          pushIntoJobsArray={this.pushIntoJobsArray}
+        />,
+      );
     });
     return (
       <div className="job-posting-container v-flex">
