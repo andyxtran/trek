@@ -22,4 +22,13 @@ sessionController.isLoggedIn = async (req, res, next) => {
   }
 };
 
+sessionController.validateJwt = (req, res) => {
+  try {
+    const validatedJwt = jwt.verify(req.body.jwt, 'JWT_SECRET_KEY');
+    res.json({ validated: true, username: validatedJwt.username });
+  } catch (err) {
+    res.json({ validated: false });
+  }
+}
+
 module.exports = sessionController;
