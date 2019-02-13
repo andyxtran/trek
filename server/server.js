@@ -18,10 +18,7 @@ app.get('/', (req, res, next) => {
   res.sendFile(path.join(__dirname, '../index.html'));
 });
 
-app.post('/signin',
-  userController.verify,
-  sessionController.startSession,
-  (req, res) => res.status(200).json({ jwt: req.locals.jwt }));
+app.post('/signin', userController.verify, sessionController.startSession, (req, res) => res.status(200).json({ jwt: req.locals.jwt }));
 
 app.post('/validateJwt', sessionController.validateJwt);
 
@@ -34,15 +31,9 @@ app.post('/newjobcard', cardController.addCard);
 
 app.post('/getcards', cardController.getCards);
 
-app.put('/updatecards', cardController.updateCard, (req, res, next) => {
-  if (res.locals.result) res.status(200).send('CARD SUCCESSFULLY UPDATED!');
-  else res.status(404).send('SHENANIGANS problems updating card :(');
-});
+app.put('/updatecards', cardController.updateCard);
 
-app.post('/deletecards', cardController.deleteCard, (req, res, next) => {
-  if (res.locals.result) res.status(200).send('CARD SUCCESSFULLY DELETED!');
-  else res.status(404).send('SHENANIGANS :(');
-});
+app.delete('/deletecards', cardController.deleteCard);
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../index.html'));

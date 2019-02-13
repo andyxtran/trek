@@ -3,7 +3,6 @@ import AddCardModalWrapper from '../css/AddCardModalWrapper';
 import AddCard from './AddCard';
 
 class AddCardModal extends Component {
-
   render() {
     return (
       <AddCardModalWrapper>
@@ -11,9 +10,8 @@ class AddCardModal extends Component {
             className="close_modal_btn">x</span>
           <AddCard displayModal={this.props.displayModal} username={this.props.username} pushIntoJobsArray={this.props.pushIntoJobsArray} />
       </AddCardModalWrapper>
-    )
+    );
   }
 }
-
 
 export default AddCardModal;

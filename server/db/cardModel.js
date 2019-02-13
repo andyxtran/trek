@@ -87,7 +87,7 @@ cardModel.updateCard = async (req, res) => {
     notes,
     contact,
     priority,
-    username,
+    last_updated,
   } = req.body;
 
   return client
@@ -102,28 +102,23 @@ cardModel.updateCard = async (req, res) => {
        salary = '${salary}',
        notes = '${notes}',
        contact = '${contact}',
-       priority = '${priority}'
+       priority = '${priority}',
+       last_updated = '${last_updated}'
        WHERE card_id = '${card_id}'
        ;`,
     )
-    .then(res => res)
-    .catch((err) => {
-      console.log('err in cardModel', err);
-      return false;
-    });
+    .then(() => ({ cardUpdated: true }))
+    .catch(() => ({ cardUpdated: false }));
 };
 
 // DELETE row in cards that match card_id
 cardModel.deleteCard = async (req, res) => {
   const { card_id } = req.body;
-
+  // console.log('deletcard is running in the server. card_id:', card_id);
   return client
-    .query(`DELETE FROM cards WHERE card_id = ${card_id};`)
-    .then(res => true)
-    .catch((err) => {
-      console.log('ERROR with deleting card in database', err);
-      return false;
-    });
+    .query(`DELETE FROM cards WHERE card_id = '${card_id}';`)
+    .then(() => ({ cardUpdated: true }))
+    .catch(() => ({ cardUpdated: false }));
 };
 
 // DELETE all rows in cards that match given uuid
