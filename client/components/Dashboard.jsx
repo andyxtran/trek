@@ -1,53 +1,50 @@
 import React, { Component } from 'react';
-
-import SignUpForm from './SignUpForm';
-import LoginForm from './LoginForm';
-import JobCards from './JobCards';
-import AddCard from './AddCard';
-import '../css/Dashboard.css';
-import FormModal from './FormModal';
+import { Redirect, Route } from 'react-router';
 import JobApplied from './JobApplied';
-
 
 class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showModal: true
+      isLoggedIn: false,
+      loadingPage: true,
+      username: ''
     }
-
-    this.toggleModal = this.toggleModal.bind(this);
   }
 
   componentDidMount() {
-    if (window.sessionStorage.getItem('Authorized') == 'true') {
-      this.setState({
-        showModal: !this.state.showModal
-      })
+    if (!this.props.location.state) {
+      return this.setState({ loadingPage: false });
     }
-  }
-
-  toggleModal() {
-    this.setState({
-      showModal: !this.state.showModal
+    fetch('/validateJwt', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ jwt: this.props.location.state.jwt })
+    })
+    .then(res => res.json())
+    .then(res => {
+      if (res.validated) {
+        return this.setState({ loadingPage: false, isLoggedIn: true, username: res.username });
+      }
+      return this.setState({ loadingPage: false });
     })
   }
 
   render() {
-    if (this.state.showModal) {
+    if (this.state.loadingPage) {
       return (
-        <div className="dashboard-container">
-          <FormModal toggleModal={this.toggleModal} />
+        <div>
+          Loading...
         </div>
       )
     } else {
-      return (
-        <div>
-          <JobApplied toggleModal={this.toggleModal} />
-        </div>
-      )
-    }
-  }
+      return this.state.isLoggedIn ? 
+      <JobApplied username={this.state.username} /> :
+      <Redirect to='/' />;
+    } 
+  }   
 }
 
 export default Dashboard;

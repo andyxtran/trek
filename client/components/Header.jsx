@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
-import '../css/Header.css';
+import HeaderWrapper from '../css/HeaderWrapper';
 
 class Header extends Component {
   constructor(props) {
@@ -8,25 +8,11 @@ class Header extends Component {
   }
 
   render() {
+    const imgUrl = "http://www.squishable.com/mm5/graphics/00000001/opensquish_pink_fairy_armadillo_303018_design.jpg";
     return (
-        <div>
-            <div className='flex-container v-flex'>
-                <div>
-                    <NavLink to='/'><img src={this.props.avatar} id='avatar'></img></NavLink >
-                </div>
-                <div className="h-flex">
-                    <div className='header-container' onClick={this.props.showPFAInfo}>
-                        <NavLink to='/jobs' activeClassName='activeNav' id='about'>Jobs</NavLink >
-                    </div>
-                    <div className='header-container' onClick={this.props.showActivity}>
-                        <NavLink to='/dashboard' activeClassName='activeNav' id='activity'>Dashboard</NavLink >
-                    </div >
-                    <div className='header-container' onClick={this.props.showUserInfo}>
-                        <NavLink to='/resources' activeClassName='activeNav' id='username'>Resources</NavLink >
-                    </div>
-                </div>
-            </div>
-        </div>
+      <HeaderWrapper>
+        <NavLink to='/'><img src={imgUrl} id='avatar'></img></NavLink>
+      </HeaderWrapper>
     )
   }
 }

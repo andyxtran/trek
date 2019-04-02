@@ -1,5 +1,5 @@
 {
-	"name": "job-hunter",
+	"name": "Trek",
 	"version": "1.0.0",
 	"description": "Job search board to keep track of all your applications.",
 	"main": "/client/index.js",
@@ -7,9 +7,10 @@
 		"start": "nodemon ./server/server.js",
 		"server": "webpack-dev-server --hot",
 		"build": "webpack --watch",
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"test": "echo \"Error: no test specified\" && exit 1",
+    "docker-dev:hot": "docker-compose -f docker-compose.yml up"
 	},
-	"author": "Carson Chen",
+	"author": "Team Shape-Up",
 	"license": "MIT",
 	"devDependencies": {
 		"@babel/core": "^7.2.2",
@@ -27,11 +28,15 @@
 		"webpack-dev-server": "^3.1.14"
 	},
 	"dependencies": {
+		"body-parser": "^1.18.3",
 		"cookie-parser": "^1.4.3",
 		"express": "^4.16.4",
 		"pg-promise": "^8.5.5",
 		"react": "^16.5.2",
 		"react-dom": "^16.5.2",
-		"react-router-dom": "^4.3.1"
+		"react-redux": "^6.0.0",
+		"react-router-dom": "^4.3.1",
+		"redux": "^4.0.1",
+		"styled-components": "^4.1.3"
 	}
 }

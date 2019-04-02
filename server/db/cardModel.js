@@ -1,6 +1,6 @@
 const pg = require('pg');
 
-const uri = 'postgres://pfa:pfa@localhost/jobs_db';
+const uri = 'postgres://nabcaedd:IXA9N6DfZg4bNpJJb3A6JgC9rI8EZNWG@stampy.db.elephantsql.com:5432/nabcaedd';
 const client = new pg.Client(uri);
 
 client.connect((err) => {
@@ -9,107 +9,139 @@ client.connect((err) => {
     throw err;
   }
   console.log('connected to the psql db!');
-
 });
 
 const cardModel = {};
 
-client.query(
-    `CREATE TABLE IF NOT EXISTS cards
-        (   
- 
-            card_id SERIAL PRIMARY KEY,
-            title VARCHAR(100) NOT NULL,
-            company VARCHAR(100) NOT NULL,
-            description VARCHAR(500),
-            location TEXT,
-            link TEXT,
-            salary TEXT,
-            notes VARCHAR(100),
-            created_date TIMESTAMP DEFAULT NOW(),
-            last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
-        );`
+client
+  .query(
+    `
+  CREATE TABLE IF NOT EXISTS cards
+    (   
+      card_id SERIAL PRIMARY KEY,
+      title TEXT NOT NULL CHECK (title <> ''),
+      company VARCHAR(100) NOT NULL CHECK (company <> ''),
+      description VARCHAR(500),
+      location TEXT,
+      link TEXT,
+      salary TEXT,
+      notes TEXT,
+      contact TEXT,
+      priority INTEGER,
+      username TEXT NOT NULL CHECK (username <> ''),
+      created_date TIMESTAMP DEFAULT NOW(),
+      last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+  `,
   )
-    .then(res => {
-        return res
-    })
-    .catch(e => console.error(e.stack))
+  .then(res => res)
+  .catch(e => console.error('ERROR in cardModel', e.stack));
 
-//create a new card that is tied to a unique user
+// create a new card that is tied to a unique user
 cardModel.createCard = async (req, res) => {
-    const { jobTitle, company, jobDescription, jobLocation, url, salaryRange, note } = req.body;
-    return client.query
-    (
-        `INSERT INTO cards (
-            title, company, description, location, link, salary, notes
-        )
-        VALUES (
-            '${jobTitle}', '${company}', '${jobDescription}', '${jobLocation}', '${url}', '${salaryRange}', '${note}'
-        )`
+  const {
+    title,
+    company,
+    description,
+    location,
+    link,
+    salary,
+    notes,
+    contact,
+    priority,
+    username,
+  } = req.body;
+
+  return client
+    .query(
+      `
+    INSERT INTO cards 
+    (title, company, description, location, link, salary, notes, contact, priority, username)
+    VALUES (
+      '${title}', 
+      '${company}', 
+      '${description}', 
+      '${location}', 
+      '${link}', 
+      '${salary}', 
+      '${notes}',
+      '${contact}',
+      '${priority}',
+      '${username}'
+    );
+  `,
     )
-      .then(() => {
-        return true;
-      })
-      .catch((err) => {
-        console.log('ERROR with creating card in database', err);
-        return false;
-      });
-  };
+    .then(() => ({ cardInserted: true }))
+    .catch(() => ({ cardInserted: false }));
+};
 
 cardModel.updateCard = async (req, res) => {
-    const { jobTitle, company, jobDescription, jobLocation, url, salaryRange, note } = req.body;
-    let updated = Date();
-    return client.query
-        (
-            `UPDATE cards SET 
-                jobTitle = title, company = company, jobDescription = jobDescription, jobLocation = jobLocation, url = url, salaryRange = salaryRange, note = note) 
-            VALUES (
-                '${jobTitle}', '${company}', '${jobDescription}', '${jobLocation}', '${url}', '${salaryRange}', '${note}', '${updated}')`
-        )
-        .then((res) => {
-        return true;
-        })
-        .catch((err) => {
-        console.log('ERROR with updating card in database', err);
-        return false;
-        });
-    };
+  const {
+    card_id,
+    title,
+    company,
+    description,
+    location,
+    link,
+    salary,
+    notes,
+    contact,
+    priority,
+    last_updated,
+  } = req.body;
 
-//DELETE row in cards that match card_id
+  return client
+    .query(
+      `UPDATE cards
+       SET
+       title = '${title}',
+       company = '${company}',
+       description = '${description}',
+       location = '${location}',
+       link = '${link}',
+       salary = '${salary}',
+       notes = '${notes}',
+       contact = '${contact}',
+       priority = '${priority}',
+       last_updated = '${last_updated}'
+       WHERE card_id = '${card_id}'
+       ;`,
+    )
+    .then(() => ({ cardUpdated: true }))
+    .catch(() => ({ cardUpdated: false }));
+};
+
+// DELETE row in cards that match card_id
 cardModel.deleteCard = async (req, res) => {
-    const { card_id } = req.body;
-    return client.query(`DELETE FROM cards WHERE card_id = card_id`)
-        .then((res) => {
-        return true;
-        })
-        .catch((err) => {
-        console.log('ERROR with deleting card in database', err);
-        return false;
-        });
-    };
+  const { card_id } = req.body;
+  // console.log('deletcard is running in the server. card_id:', card_id);
+  return client
+    .query(`DELETE FROM cards WHERE card_id = '${card_id}';`)
+    .then(() => ({ cardUpdated: true }))
+    .catch(() => ({ cardUpdated: false }));
+};
 
-//DELETE all rows in cards that match given uuid
+// DELETE all rows in cards that match given uuid
 cardModel.deleteAllCards = async (req, res) => {
-    // return client.query(`DELETE FROM cards WHERE uuid = uuid)`)
-    //     .then((res) => {
-    //     return true;
-    //     })
-    //     .catch((err) => {
-    //     console.log('ERROR with deleting cards in database', err);
-    //     return false;
-    //     });
-    };
+  // return client.query(`DELETE FROM cards WHERE uuid = uuid)`)
+  //     .then((res) => {
+  //     return true;
+  //     })
+  //     .catch((err) => {
+  //     console.log('ERROR with deleting cards in database', err);
+  //     return false;
+  //     });
+};
 
-//retrieve all rows in cards that match given uuid
+// retrieve all rows in cards that match given uuid
 cardModel.getCards = async (req, res) => {
-    return client.query(`SELECT * FROM cards WHERE uuid = uuid)`)
-        .then((res) => {
-        return res.rows;
-        })
-        .catch((err) => {
-        console.log('ERROR with getting cards from database', err);
-        return false;
-        });
-    };
-
+  const { username } = req.body;
+  return client
+    .query(`SELECT * FROM cards WHERE username = '${username}';`)
+    .then(res => res.rows)
+    .catch((err) => {
+      console.log('ERROR with getting cards from database');
+      return false;
+    });
+};
 module.exports = cardModel;

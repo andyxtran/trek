@@ -1,3 +1,4 @@
+// use this for progressive web app!!! 
 // // Set this to true for production
 // const doCache = false;
 

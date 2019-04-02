@@ -1,0 +1,25 @@
+version: "3"
+services:
+  dev:
+    depends_on:
+      - postgres-db
+    image: trek/dev
+    container_name: "trek-dev-hot"
+    ports: 
+      - "8080:8080"
+    volumes:
+      - .:/usr/src/app/
+      - node_modules:/usr/src/app/node_modules
+    command: npm run dev:hot
+  postgres-db:
+    image: trek/postgres
+    container_name: "trek-database"
+    environment: 
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USER=trekAdmin
+      - POSTGRES_DB=trekDb
+    volumes: 
+      - dev-db-volume:/var/lib/postgresql/data
+volumes:
+  node_modules:
+  dev-db-volume:
