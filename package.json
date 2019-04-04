@@ -7,7 +7,8 @@
 		"start": "nodemon ./server/server.js",
 		"server": "webpack-dev-server --hot",
 		"build": "webpack --watch",
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"test": "echo \"Error: no test specified\" && exit 1",
+    "docker-dev:hot": "docker-compose -f docker-compose.yml up"
 	},
 	"author": "Team Shape-Up",
 	"license": "MIT",
