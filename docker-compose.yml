@@ -17,7 +17,7 @@ services:
     environment: 
       - POSTGRES_PASSWORD=admin
       - POSTGRES_USER=trekAdmin
-      - POSTGRES_DB=trekDb
+      - POSTGRES_DB=postgres
     volumes: 
       - dev-db-volume:/var/lib/postgresql/data
 volumes:

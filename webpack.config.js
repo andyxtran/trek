@@ -1,4 +1,5 @@
-const path = require('path')
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   mode: 'development',
@@ -6,6 +7,22 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'bundle.js'
+  },
+  devServer: {
+    host: '0.0.0.0',
+    port: 8080,
+    contentBase: path.resolve(__dirname, 'build'),
+    hot: true,
+    publicPath: '/',
+    historyApiFallback: true,
+    inline: true,
+    headers: { 'Access-Control-Allow-Origin': '*' },
+    proxy: {
+      '/api/**': {
+        target: 'http://localhost:3000/',
+        secure: false,
+      },
+    },
   },
   module: {
     rules: [
@@ -32,5 +49,11 @@ module.exports = {
   },
   resolve: {
     extensions: ['*', '.js', '.jsx']
-  }
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      favicon: path.resolve(__dirname, './client/public/img/trek-logo.png'),
+      template: './index.html'
+    })
+  ]
 }

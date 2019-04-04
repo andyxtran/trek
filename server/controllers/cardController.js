@@ -17,7 +17,6 @@ cardController.deleteCard = async (req, res, next) => {
   res.json(result);
 };
 
-// should return an array of results
 cardController.getCards = async (req, res) => {
   const result = await Cards.getCards(req);
   res.json(result);

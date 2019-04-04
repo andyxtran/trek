@@ -8,10 +8,9 @@ class Header extends Component {
   }
 
   render() {
-    const imgUrl = "http://www.squishable.com/mm5/graphics/00000001/opensquish_pink_fairy_armadillo_303018_design.jpg";
     return (
       <HeaderWrapper>
-        <NavLink to='/'><img src={imgUrl} id='avatar'></img></NavLink>
+        <NavLink to='/'><img src='img/trek-logo.png' id='avatar'></img></NavLink>
       </HeaderWrapper>
     )
   }

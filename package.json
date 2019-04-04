@@ -2,13 +2,14 @@
 	"name": "Trek",
 	"version": "1.0.0",
 	"description": "Job search board to keep track of all your applications.",
-	"main": "/client/index.js",
+	"main": "./client/index.js",
 	"scripts": {
 		"start": "nodemon ./server/server.js",
+		"dev:hot": "NODE_ENV=development nodemon ./server/server.js & webpack-dev-server --open --hot --inline --progress --colors --watch",
 		"server": "webpack-dev-server --hot",
 		"build": "webpack --watch",
 		"test": "echo \"Error: no test specified\" && exit 1",
-    "docker-dev:hot": "docker-compose -f docker-compose.yml up"
+		"docker-dev:hot": "docker-compose -f docker-compose.yml up"
 	},
 	"author": "Team Shape-Up",
 	"license": "MIT",
@@ -19,6 +20,7 @@
 		"babel-loader": "^8.0.5",
 		"bcrypt": "^3.0.4",
 		"css-loader": "^2.1.0",
+		"html-webpack-plugin": "^3.2.0",
 		"jsonwebtoken": "^8.4.0",
 		"nodemon": "^1.18.9",
 		"react-router": "^4.3.1",

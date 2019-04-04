@@ -10,6 +10,7 @@ const sessionController = require('./controllers/sessionController');
 const cardController = require('./controllers/cardController');
 
 app.use(express.static(path.join(__dirname, './../')));
+app.use(express.static(path.join(__dirname, '../client/public/')))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
