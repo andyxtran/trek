@@ -1,85 +1,40 @@
-# Project Title
+<h1 align="center">
+  <br>
+    <img src="" alt="logo" width="400">
+  <br>
+</h1>
 
-Trek is an open source employment analysis web service tool that allows you to monitor your employment progress. More updates coming soon!
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)]
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)]
 
-## Getting Started
+<h4 align="center">An open source employment analysis web service tool that allows you to monitor your employment progress! </h4>
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
-
-### Prerequisites
-
-What things you need to install the software and how to install them
-
-```
-Give examples
-```
-
-### Installing
-
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
+## How to Use
+#### [Download Directly from GitHub]
+1. Clone the repo and run ```npm install```
+2. Run ```npm run build ```
+3. ```npm start``` and the application will be served on ```localhost:3000``` 
 
 ## Built With
+- [React](https://reactjs.org/) - Front-end Framework
+- [Redux](https://redux.js.org/) - State management libary
+- [Node.js](https://nodejs.org/en/) - File system, testing, core extension functionality
+- [Express](https://expressjs.com/) - Server hosting
+- [Webpack](https://webpack.js.org/) - Bundling and managing files
+- [Docker](https://www.docker.com/) - Containerizing the application
+- [PWA](https://developers.google.com/web/progressive-web-apps/) - Creating service workers and optimize for service workers
+- [PostgreSQL](https://www.postgresql.org/) - Database managment
 
-* [React](https://reactjs.org/)
-* [Redux](https://redux.js.org/)
-* [Express](https://expressjs.com/)
-* [Node.js](https://nodejs.org/en/)
-* [Docker](https://www.docker.com/)
+## Contributors
+Thank you to all who have contributed so far and/or still contributing!!! If you would like to contribute please send us a message or make a pull request :)
 
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
-
-## Authors
+* [Adele](https://github.com/adelecalvo)
+* [Andy](https://github.com/andyxtran)
+* [Brandon](https://github.com/murphybrandon)
+* [Carson](https://github.com/carsoncychen)
+* [Dan](https://github.com/wdanni)
+* [Gaber](https://github.com/GaberMowiena)
+* [Victor](https://github.com/victorvrv)
 
 ## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+MIT - check out [license](https://github.com/ReactION-js/ReactION/LICENSE) page for more details
