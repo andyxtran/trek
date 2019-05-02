@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-    <img src="" alt="logo" width="400">
+    <img src="https://github.com/andyxtran/trek/blob/master/images/trek-logo.png" alt="logo" width="400">
   <br>
 </h1>
 
