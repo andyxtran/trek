@@ -1,6 +1,4 @@
 // Database imports: User: pfa and pw pfa and database "jobs"
-// psql -h stampy.db.elephantsql.com -d nabcaedd -U nabcaedd
-// Password:IXA9N6DfZg4bNpJJb3A6JgC9rI8EZNWG
 const pg = require('pg');
 
 const uri = 'postgres://trekAdmin:admin@localhost';
